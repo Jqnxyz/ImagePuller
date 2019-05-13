@@ -258,25 +258,25 @@ javascript: (function() {
         downLink.remove();
         console.log("Downloaded from " + siteType);
     } else if (siteType.indexOf("instagram.com") !== -1) {
-        //due to Cross-Origin Rules on instagram's pages, we are forced to use vanilla JS as we can't import JQuery.
+        /*due to Cross-Origin Rules on instagram's pages, we are forced to use vanilla JS as we can't import JQuery.*/
         var curLocation = window.location.toString();
         if (curLocation.includes("/p/") == true) {
-            //on profile/media page
+            /*on profile/media page*/
             if (document.querySelector(".eLAPa.kPFhm") == null){
-                //video
+                /*video*/
                 imgURL = document.querySelector(".GRtmf.wymO0 ").querySelector("video").attributes['src'].value;
             } else {
-                //image
+                /*image*/
                 imgURL = document.querySelector(".eLAPa.kPFhm").querySelector(".KL4Bh").querySelector("img").attributes['src'].value;
             }
         }
-        //due to COR, we have to send data to the endpoint via a new tab. This can get annoying but it's the only way we can bypass COR for now.
+        /*due to COR, we have to send data to the endpoint via a new tab. This can get annoying but it's the only way we can bypass COR for now.*/
         function secureCORStore() {
             var downloadKey = APIKEY;
             var objectKey = "";
             var fpProcess = "silent_store";
             console.log("process="+fpProcess+"&key="+downloadKey+"&file="+imgURL);
-            //window.open = "https://api.zlux.us/ins_fileproxy.php?process="+fpProcess+"&key="+downloadKey+"&file="+imgURL;
+            /*window.open = "https://api.zlux.us/ins_fileproxy.php?process="+fpProcess+"&key="+downloadKey+"&file="+imgURL;*/
 
             var postdata = {
                 process: fpProcess,
