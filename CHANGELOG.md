@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Instagram handler fixed as of `2019-05-14 01:00:00 GMT+8`
+- API Key now read from a single variable.
 
 ### Added
 - Functions to mitigate Content-Origin Rules  

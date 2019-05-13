@@ -10,6 +10,11 @@ A tool that utilises some *undocumented (sorry)* endpoints on https://zlux.us/ t
 
 
 ## How to use
-1. Replace all instances of `[API KEY]` in both files with an API key obtained from https://account.zlux.us/
+1. Replace `[API KEY]` at the top of the script in both files with an API key obtained from https://account.zlux.us/
 2. Copy code and paste into the *URL* field on a bookmark. 
 3. Click on the bookmark on compatible pages.
+
+_Alternatively_
+
+1. Replace `[API KEY]` at the top of the script in both files with an API key obtained from https://account.zlux.us/
+2. Copy and paste script into your browser's JavaScript console.

@@ -1,5 +1,6 @@
 
 javascript: (function() {
+    var APIKEY = "[API KEY]";
     var siteType = document.location.hostname;
     var siteTypeFull = window.location.toString();
 
@@ -226,7 +227,7 @@ javascript: (function() {
 
             function download() {
                 console.log("1 URL: " + imgURL);
-                var downloadKey = "[API KEY]";
+                var downloadKey = APIKEY;
                 var objectKey = "";
                 var jqxhr = $.post("https://api.zlux.us/fileproxy.php", {
                     key: downloadKey,
@@ -271,7 +272,7 @@ javascript: (function() {
         }
         //due to COR, we have to send data to the endpoint via a new tab. This can get annoying but it's the only way we can bypass COR for now.
         function secureCORStore() {
-            var downloadKey = "[API KEY]";
+            var downloadKey = APIKEY;
             var objectKey = "";
             var fpProcess = "silent_store";
             console.log("process="+fpProcess+"&key="+downloadKey+"&file="+imgURL);
@@ -303,7 +304,7 @@ javascript: (function() {
         }
 
         function insecureCORStore() {
-            var downloadKey = "[API KEY]";
+            var downloadKey = APIKEY;
             var objectKey = "";
             var fpProcess = "store";
             console.log("process="+fpProcess+"&key="+downloadKey+"&file="+imgURL);
@@ -311,7 +312,7 @@ javascript: (function() {
         }
 
         function insecureCORDownload() {
-            var downloadKey = "[API KEY]";
+            var downloadKey = APIKEY;
             var objectKey = "";
             var fpProcess = "store_download";
             console.log("process="+fpProcess+"&key="+downloadKey+"&file="+imgURL);
