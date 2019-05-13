@@ -263,12 +263,20 @@ javascript: (function() {
         var curLocation = window.location.toString();
         if (curLocation.includes("/p/") == true) {
             /*on profile/media page*/
-            if (document.querySelector(".eLAPa.kPFhm") == null){
+            var imgQueryClass = null;
+            if (document.querySelector(".eLAPa.kPFhm") != null){
+                imgQueryClass = ".eLAPa.kPFhm";
+            } else if (document.querySelector(".eLAPa.RzuR0") != null){
+                imgQueryClass = ".eLAPa.RzuR0";
+            } else if (document.querySelector(".eLAPa._23QFA") != null){
+                imgQueryClass = ".eLAPa._23QFA";
+            }
+            if (imgQueryClass != null){
+                /*image*/
+                imgURL = document.querySelector(imgQueryClass).querySelector(".KL4Bh").querySelector("img").attributes['src'].value;
+            } else {
                 /*video*/
                 imgURL = document.querySelector(".GRtmf.wymO0 ").querySelector("video").attributes['src'].value;
-            } else {
-                /*image*/
-                imgURL = document.querySelector(".eLAPa.kPFhm").querySelector(".KL4Bh").querySelector("img").attributes['src'].value;
             }
         }
         /*due to COR, we have to send data to the endpoint via a new tab. This can get annoying but it's the only way we can bypass COR for now.*/
@@ -283,7 +291,7 @@ javascript: (function() {
                 process: fpProcess,
                 key: downloadKey,
                 file: imgURL
-            }
+            };
 
             var form = document.createElement("form");
             form.target = "_blank";
@@ -332,7 +340,7 @@ javascript: (function() {
         }
         document.body.appendChild(s);
     }
-})()
+})();
 
 if (typeof jQuery == 'undefined') {
     console.log("No JQuery");

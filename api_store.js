@@ -262,12 +262,20 @@ javascript: (function() {
         var curLocation = window.location.toString();
         if (curLocation.includes("/p/") == true) {
             /*on profile/media page*/
-            if (document.querySelector(".eLAPa.kPFhm") == null){
+            var imgQueryClass = null;
+            if (document.querySelector(".eLAPa.kPFhm") != null){
+                imgQueryClass = ".eLAPa.kPFhm";
+            } else if (document.querySelector(".eLAPa.RzuR0") != null){
+                imgQueryClass = ".eLAPa.RzuR0";
+            } else if (document.querySelector(".eLAPa._23QFA") != null){
+                imgQueryClass = ".eLAPa._23QFA";
+            }
+            if (imgQueryClass != null){
+                /*image*/
+                imgURL = document.querySelector(imgQueryClass).querySelector(".KL4Bh").querySelector("img").attributes['src'].value;
+            } else {
                 /*video*/
                 imgURL = document.querySelector(".GRtmf.wymO0 ").querySelector("video").attributes['src'].value;
-            } else {
-                /*image*/
-                imgURL = document.querySelector(".eLAPa.kPFhm").querySelector(".KL4Bh").querySelector("img").attributes['src'].value;
             }
         }
         /*due to COR, we have to send data to the endpoint via a new tab. This can get annoying but it's the only way we can bypass COR for now.*/
@@ -282,7 +290,7 @@ javascript: (function() {
                 process: fpProcess,
                 key: downloadKey,
                 file: imgURL
-            }
+            };
 
             var form = document.createElement("form");
             form.target = "_blank";
@@ -319,11 +327,11 @@ javascript: (function() {
             window.location.href = "https://api.zlux.us/ins_fileproxy.php?process="+fpProcess+"&key="+downloadKey+"&file="+imgURL, "_blank";
         }
         if (imgURL != null) {
-            secureCORStore();
+            insecureCORStore();
         }
     } else {
         var s = document.createElement("script");
-        s.src = "https://code.jquery.com/jquery-3.1.1.min.js";
+        s.src = "//code.jquery.com/jquery-3.1.1.min.js";
         if (s.addEventListener) {
             s.addEventListener("load", callback, false)
         } else if (s.readyState) {
@@ -331,4 +339,8 @@ javascript: (function() {
         }
         document.body.appendChild(s);
     }
-})()
+})();
+
+if (typeof jQuery == 'undefined') {
+    console.log("No JQuery");
+}
