@@ -56,6 +56,7 @@ javascript: (function() {
                 if (curLocation.includes("/p/") == true) {
                     if ($('._4xng7') != null) {
                         imgURL = null;
+                        //old
                         if (imgURL == null) {
                             var multiImageIG = new Array();
                             var ylngrDiv = $('.YlNGR');
@@ -256,14 +257,82 @@ javascript: (function() {
         downLink[0].click();
         downLink.remove();
         console.log("Downloaded from " + siteType);
+    } else if (siteType.indexOf("instagram.com") !== -1) {
+        //due to Cross-Origin Rules on instagram's pages, we are forced to use vanilla JS as we can't import JQuery.
+        var curLocation = window.location.toString();
+        if (curLocation.includes("/p/") == true) {
+            //on profile/media page
+            if (document.querySelector(".eLAPa.kPFhm") == null){
+                //video
+                imgURL = document.querySelector(".GRtmf.wymO0 ").querySelector("video").attributes['src'].value;
+            } else {
+                //image
+                imgURL = document.querySelector(".eLAPa.kPFhm").querySelector(".KL4Bh").querySelector("img").attributes['src'].value;
+            }
+        }
+        //due to COR, we have to send data to the endpoint via a new tab. This can get annoying but it's the only way we can bypass COR for now.
+        function secureCORStore() {
+            var downloadKey = "[API KEY]";
+            var objectKey = "";
+            var fpProcess = "silent_store";
+            console.log("process="+fpProcess+"&key="+downloadKey+"&file="+imgURL);
+            //window.open = "https://api.zlux.us/ins_fileproxy.php?process="+fpProcess+"&key="+downloadKey+"&file="+imgURL;
+
+            var postdata = {
+                process: fpProcess,
+                key: downloadKey,
+                file: imgURL
+            }
+
+            var form = document.createElement("form");
+            form.target = "_blank";
+            form.method = "POST";
+            form.action = "https://api.zlux.us/fileproxy.php";
+            form.style.display = "none";
+
+            for (var key in postdata) {
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = postdata[key];
+                form.appendChild(input);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+
+        function insecureCORStore() {
+            var downloadKey = "[API KEY]";
+            var objectKey = "";
+            var fpProcess = "store";
+            console.log("process="+fpProcess+"&key="+downloadKey+"&file="+imgURL);
+            window.open("https://api.zlux.us/ins_fileproxy.php?process="+fpProcess+"&key="+downloadKey+"&file="+imgURL, "_blank");
+        }
+
+        function insecureCORDownload() {
+            var downloadKey = "[API KEY]";
+            var objectKey = "";
+            var fpProcess = "store_download";
+            console.log("process="+fpProcess+"&key="+downloadKey+"&file="+imgURL);
+            window.location.href = "https://api.zlux.us/ins_fileproxy.php?process="+fpProcess+"&key="+downloadKey+"&file="+imgURL, "_blank";
+        }
+        if (imgURL != null) {
+            insecureCORDownload();
+        }
     } else {
         var s = document.createElement("script");
-        s.src = "https://code.jquery.com/jquery-3.1.1.min.js";
+        s.src = "//code.jquery.com/jquery-3.1.1.min.js";
         if (s.addEventListener) {
             s.addEventListener("load", callback, false)
         } else if (s.readyState) {
             s.onreadystatechange = callback
         }
-        document.body.appendChild(s);
+        //document.body.appendChild(s);
     }
 })()
+
+if (typeof jQuery == 'undefined') {
+    console.log("No JQuery");
+}
